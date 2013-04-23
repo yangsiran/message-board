@@ -1,0 +1,7 @@
+$def with (form)
+$var title: Profile
+$var cssfiles: /static/profile.css
+<img src="/photo/$session.id_" width=170 height=170 hidden/>
+<form method="POST" enctype="multipart/form-data">
+$:form.render()
+</form>

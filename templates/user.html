@@ -1,0 +1,63 @@
+$def with (information, form, page)
+$var title: $information.username - Messageboard
+$var cssfiles: /static/user.css
+<img src="/photo/$information.id_" width=170 height=170
+  alt="$information.username" />
+
+<table id="information">
+  <tr>
+    <td>Name</td>
+    <td>$(information.first_name + information.last_name)</td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td>$information.email</td>
+  <tr>
+    <td>Gender</td>
+    <td>$information.gender</td>
+  </tr>
+  <tr>
+    <td>School</td>
+    <td>$information.school</td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td>$information.address</td>
+  </tr>
+  <tr>
+    <td>Birth Day</td>
+    <td>$(information.birth_year+' '+information.birth_month+' '+information.birth_day)</td>
+  </tr>
+  <tr>
+    <td>Summary</td>
+    <td>$information.summary</td>
+  </tr>
+</table>
+
+<form method="POST" id="leave_message">
+  $:form.render()
+</form>
+
+<div>
+$for message in list(get_messages(information.id_))[(page-1)*5: page*5]:
+  <div>
+    <a href="$message.user_id">
+      <img src="/photo/$message.user_id" width=50 height=50>
+      $get_name(message.user_id)
+    </a>
+    $:message.message</br>
+    $message.created
+    $if session.id_ == information.id_ or session.id_ == message.user_id:
+      <a href="/delete?user=$message.user_id&created=$message.created">
+        delete</a>
+  </div>
+</div>
+
+<div>
+$ l = int(ceil(len(get_messages(information.id_)) / 5.0))
+$for i in range(1, l+1):
+  $if i is page:
+    $i
+  $else:
+    <a href="/$information.id_?page=$i">$i</a>
+</div>
