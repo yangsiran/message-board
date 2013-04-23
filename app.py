@@ -82,7 +82,6 @@ app.add_processor(web.loadhook(loadcookie))
 class Index:
     def GET(self):
         if session.login:
-            print type(session.id_)
             raise web.seeother('/' + session.id_)
         else:
             raise web.seeother('/login')
@@ -293,7 +292,6 @@ class Delete:
             except AttributeError:
                 pass
             else:
-                print session.id_, page, user
                 if session.login:
                     if session.id_ == page or session.id_ == user:
                         db.delete('user_'+page, where='created=$created',
