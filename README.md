@@ -1,6 +1,7 @@
 # setup:
 
 In your Mysql database:
+
     create table users (
       id_ char(3),
       pass char(40),
